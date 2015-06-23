@@ -1,4 +1,5 @@
 #include "../../ComLib/linuxLib/linComNet.h"
+#include "../../ComLib/linuxLib/Func.h"
 #include "Config.h"
 #include <iostream>
 #include <stdlib.h>
@@ -39,6 +40,13 @@ int main(int argc,char **argv){
 		string ip=inet_ntoa(cliaddr.sin_addr);
 
 		cout<<"ip="<<ip<<" connect!"<<endl;
+		char buf[256];
+		for(int i=0;i<10;i++){
+			int rlen=recv(connfd,buf,256,0);
+			cout<<"get the msg="<<buf<<endl;
+			char *smsg="i'm from server";
+			send(connfd,smsg,strlen(smsg),0);
+		}
 
 	}
 	
