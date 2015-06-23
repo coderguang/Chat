@@ -1,4 +1,4 @@
-#include "../../ComLib/ComNet.h"
+#include "../../ComLib/linuxLib/linComNet.h"
 #include "Config.h"
 #include <iostream>
 #include <stdlib.h>
