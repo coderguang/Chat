@@ -5,7 +5,7 @@
 #include "Config.h"
 #pragma comment(lib,"ws2_32.lib")
 using namespace std;
-
+const int MAX = 20;
 int main(){
     WORD mVersionRequested;
     WSADATA wsaData;//WSADATA结构被用来保存AfxSocketInit函数返回的WindowsSockets初始化信息。
@@ -23,12 +23,16 @@ int main(){
 
     if(ret!=0){
         cout<<"WSASartup  failed!"<<endl;
+		getchar();
+		getchar();
         exit(1);
     }
 
     if(LOBYTE(wsaData.wVersion)!=2||HIBYTE(wsaData.wVersion)!=2){
         WSACleanup();
         cout<<"invaild version"<<endl;
+		getchar();
+		getchar();
         exit(1);
     }
 
@@ -36,6 +40,8 @@ int main(){
 	if (sClient == INVALID_SOCKET){
 		WSACleanup();
 		cout << "socket failed" << endl;
+		getchar();
+		getchar();
 		exit(0);
 	}
 
@@ -50,11 +56,15 @@ int main(){
         cout<<"连接失败!"<<endl;
         closesocket(sClient);
         WSACleanup();
+		getchar();
+		getchar();
         exit(1);
     }
 
-	while (true){
-		char msg[] = "hello,I'm from client";
+	char msg[] = "hello,我来自客户端";
+	char buf[MAX];
+	int i = 0;
+	while (i++<10){		
 
 		ret = send(sClient, (char*)&msg, sizeof(msg), 0);
 
@@ -62,9 +72,20 @@ int main(){
 			cout << "发送失败!" << endl;
 			break;
 		}
+
+		int rev=recv(sClient, buf, MAX, 0);
+		buf[rev] = '\0';
+		if (rev > 0){
+			cout << "收到数据:" << buf << endl;
+			cout.flush();
+		}
+
 	}
+	cout << "over" << endl;
     closesocket(sClient);
     WSACleanup();
-    return 0;
+	getchar();
+	getchar();
+	return 0;
 }
 
