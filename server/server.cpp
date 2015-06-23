@@ -4,10 +4,21 @@
 #include <iostream>
 #include <stdlib.h>
 #include <string.h>
+#include <string>
 #include <arpa/inet.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 using namespace std;
+
+class proto{
+public:
+	char name[10];
+	char msg[20];
+	proto(string n,string m){
+		memcpy(name,n.c_str(),n.length()+1);
+		memcpy(msg,m.c_str(),m.length()+1);
+	}
+};
 
 int main(int argc,char **argv){
 	int listenfd;
@@ -44,8 +55,10 @@ int main(int argc,char **argv){
 		for(int i=0;i<10;i++){
 			int rlen=recv(connfd,buf,256,0);
 			cout<<"get the msg="<<buf<<endl;
+			proto temp("guang","hello,guang");
 			char *smsg="i'm from server";
-			send(connfd,smsg,strlen(smsg),0);
+			send(connfd,&temp,sizeof(temp),0);
+			//send(connfd,smsg,strlen(smsg),0);
 		}
 
 	}
