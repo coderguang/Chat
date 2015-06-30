@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 const int PORT=9022;//the server open port
+const int MSGSIZE=128;
 
 
 
