@@ -2,7 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <winsock2.h>
+#include <thread>
 #include "Config.h"
+#include "ChatInput.h"
+#include "Receive.h"
 #pragma comment(lib,"ws2_32.lib")
 using namespace std;
 const int MAX = 128;
@@ -72,36 +75,10 @@ int main(){
         exit(1);
     }
 
-	char msg[] = "hello,I'm from client";
-	char sbuf[MAX];
-	char rbuf[MAX];
-	string str;
-	proto *tmp = new proto("", "");
-	int i = 0;
-	while (true){		
-
-		int rev = recv(sClient, rbuf, MAX, 0);
-		rbuf[rev] = '\0';
-
-		//int rev = recv(sClient, (char*)tmp, MAX, 0);
-		if (rev > 0){
-			cout << "收到数据:" << rbuf << endl;
-			//cout << "收到数据:name=" <<tmp->name<<" ,msg="<<tmp->msg  << endl;
-		}
-
-		cout << "请输入聊天内容:";
-		//cin.getline(sbuf, MAX);
-		//cin >> str;
-		cin >> sbuf;
-		int len = strlen(sbuf);
-		ret = send(sClient,sbuf, strlen(sbuf), 0);
-
-		if (ret == SOCKET_ERROR){
-			cout << "发送失败!" << endl;
-			break;
-		}
-
-	}
+	thread recThread(Receive, sClient);
+	thread sendThread(ChatInput,sClient);
+	recThread.join();
+	sendThread.join();
 
 	cout << "over" << endl;
     closesocket(sClient);

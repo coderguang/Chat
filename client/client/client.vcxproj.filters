@@ -23,5 +23,11 @@
     <ClInclude Include="Config.h">
       <Filter>源文件</Filter>
     </ClInclude>
+    <ClInclude Include="ChatInput.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Receive.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
