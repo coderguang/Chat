@@ -101,9 +101,9 @@ int main(int argc,char **argv){
 					client[i]=-1;
 				}else{
 					cout<<"get the msg:"<<buf<<endl;
-					for(int j=0;j<maxi;j++){
+					for(int j=0;j<=maxi;j++){
 						if(client[j]!=-1)
-							Writen(client[i],buf,n);
+							Writen(client[j],buf,n);
 					}
 					
 				}
