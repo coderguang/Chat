@@ -11,13 +11,14 @@ void ChatInput(SOCKET sockfd){
 	char buf[MSGSIZE];
 	cout << "直接输入消息，然后回车即可发送消息:";
 	while (true){
-		cin >> buf;
+		//cin >> buf;
+		cin.getline(buf, MSGSIZE);
 		int slen = send(sockfd, buf, strlen(buf),0);
 		if (slen == SOCKET_ERROR){
 			cout << "发送失败!" << endl;
 			break;
 		}else{
-			cout << "发送成功！" << endl;
+			//cout << "发送成功！" << endl;
 		}
 	}
 }
