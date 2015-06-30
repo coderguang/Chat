@@ -5,7 +5,18 @@
 #include "Config.h"
 #pragma comment(lib,"ws2_32.lib")
 using namespace std;
-const int MAX = 20;
+const int MAX = 128;
+
+class proto{
+public:
+	char name[10];
+	char msg[20];
+	proto(string n, string m){
+		memcpy(name, n.c_str(), n.length() + 1);
+		memcpy(msg, m.c_str(), m.length() + 1);
+	}
+};
+
 int main(){
     WORD mVersionRequested;
     WSADATA wsaData;//WSADATA结构被用来保存AfxSocketInit函数返回的WindowsSockets初始化信息。
@@ -61,26 +72,37 @@ int main(){
         exit(1);
     }
 
-	char msg[] = "hello,我来自客户端";
-	char buf[MAX];
+	char msg[] = "hello,I'm from client";
+	char sbuf[MAX];
+	char rbuf[MAX];
+	string str;
+	proto *tmp = new proto("", "");
 	int i = 0;
-	while (i++<10){		
+	while (true){		
 
-		ret = send(sClient, (char*)&msg, sizeof(msg), 0);
+		int rev = recv(sClient, rbuf, MAX, 0);
+		rbuf[rev] = '\0';
+
+		//int rev = recv(sClient, (char*)tmp, MAX, 0);
+		if (rev > 0){
+			cout << "收到数据:" << rbuf << endl;
+			//cout << "收到数据:name=" <<tmp->name<<" ,msg="<<tmp->msg  << endl;
+		}
+
+		cout << "请输入聊天内容:";
+		//cin.getline(sbuf, MAX);
+		//cin >> str;
+		cin >> sbuf;
+		int len = strlen(sbuf);
+		ret = send(sClient,sbuf, strlen(sbuf), 0);
 
 		if (ret == SOCKET_ERROR){
 			cout << "发送失败!" << endl;
 			break;
 		}
 
-		int rev=recv(sClient, buf, MAX, 0);
-		buf[rev] = '\0';
-		if (rev > 0){
-			cout << "收到数据:" << buf << endl;
-			cout.flush();
-		}
-
 	}
+
 	cout << "over" << endl;
     closesocket(sClient);
     WSACleanup();
