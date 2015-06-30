@@ -20,9 +20,17 @@ public:
 	}
 };
 
+
+//static const int FD_SETSIZE=10;
+static const int MAXLINE=30;
+
 int main(int argc,char **argv){
-	int listenfd;
-	int connfd;
+	int i,maxi,maxfd,sockfd,listenfd,connfd;
+	int nready,client[FD_SETSIZE];
+	ssize_t n;
+	fd_set rset,allset;
+	char buf[MAXLINE];
+	socklen_t clilen;
 	
 	struct sockaddr_in cliaddr;
 	struct sockaddr_in servaddr;
@@ -40,29 +48,75 @@ int main(int argc,char **argv){
 
 	Listen(listenfd,10);
 	
-	while(true){
-		socklen_t len=sizeof(cliaddr);
+	maxfd=listenfd; //initialize
+	maxi=-1;
 
-		connfd=accept(listenfd,(struct sockaddr *)&cliaddr,&len);
-		
-		if(connfd==ERROR){
-			continue;
-		}
-		string ip=inet_ntoa(cliaddr.sin_addr);
-
-		cout<<"ip="<<ip<<" connect!"<<endl;
-		char buf[256];
-		for(int i=0;i<10;i++){
-			int rlen=recv(connfd,buf,256,0);
-			cout<<"get the msg="<<buf<<endl;
-			proto temp("guang","hello,guang");
-			char *smsg="i'm from server";
-			send(connfd,&temp,sizeof(temp),0);
-			//send(connfd,smsg,strlen(smsg),0);
-		}
-
+	for(i=0;i<FD_SETSIZE;i++){
+		client[i]=-1;
 	}
 	
+	FD_ZERO(&allset);
+	FD_SET(listenfd,&allset);
+
+	for(;;){
+		rset=allset;
+		nready=Select(maxfd+1,&rset,NULL,NULL,NULL);
+	
+		if(FD_ISSET(listenfd,&rset)){//new client connecton
+			clilen=sizeof(cliaddr);
+			connfd=Accept(listenfd,(struct sockaddr *)&cliaddr,&clilen);
+
+			for(i=0;i<FD_SETSIZE;i++){
+				if(client[i]<0){
+					client[i]=connfd;//save the new sockfd
+					break;
+				}
+			}
+			if(i==FD_SETSIZE){
+				cout<<"sockfd set full!"<<endl;
+			}
+			FD_SET(connfd,&allset);//add new to set
+			if(connfd>maxfd){
+				maxfd=connfd;//for select
+			}
+			if(i>maxi){//max index in client[]
+				maxi=i;
+			}
+			if(nready<=0){
+				continue; //no more readable
+			}
+
+	
+		}
+		
+		for(i=0;i<=maxi;i++){//check all clients for data
+			if((sockfd=client[i])<0){
+				continue;
+			}
+			if(FD_ISSET(sockfd,&rset)){
+				memset(buf,sizeof(buf),'\0');
+				if((n=Read(sockfd,buf,MAXLINE))==0){
+					close(sockfd);//connection closed by client
+					FD_CLR(sockfd,&allset);
+					client[i]=-1;
+				}else{
+					cout<<"get the msg:"<<buf<<endl;
+					for(int j=0;j<maxi;j++){
+						if(client[j]!=-1)
+							Writen(client[i],buf,n);
+					}
+					
+				}
+				if(nready<=0){
+					break;
+				}
+			
+			}
+		}
+		
+		
+
+	}
 
 
 
