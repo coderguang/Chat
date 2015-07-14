@@ -1,5 +1,5 @@
-#include "../../ComLib/linuxLib/linComNet.h"
-#include "../../ComLib/linuxLib/Func.h"
+#include "../ComLib/linuxLib/linComNet.h"
+#include "../ComLib/linuxLib/Func.h"
 #include "Config.h"
 #include <iostream>
 #include <stdlib.h>
@@ -66,6 +66,7 @@ int main(int argc,char **argv){
 
 			for(i=0;i<FD_SETSIZE;i++){
 				if(client[i]<0){
+					cout<<"socket="<<connfd<<" connected!"<<endl;
 					client[i]=connfd;//save the new sockfd
 					break;
 				}
@@ -94,6 +95,7 @@ int main(int argc,char **argv){
 			if(FD_ISSET(sockfd,&rset)){
 				memset(buf,sizeof(buf),'\0');
 				if((n=Read(sockfd,buf,MSGSIZE))==0){
+					cout<<"socket="<<sockfd<<" is disconnect..."<<endl;
 					close(sockfd);//connection closed by client
 					FD_CLR(sockfd,&allset);
 					client[i]=-1;
@@ -112,6 +114,5 @@ int main(int argc,char **argv){
 			
 			}
 		}
-
 	}
 }
