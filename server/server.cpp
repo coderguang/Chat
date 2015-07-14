@@ -1,6 +1,6 @@
 #include "../ComLib/linuxLib/linComNet.h"
 #include "../ComLib/linuxLib/Func.h"
-#include "Config.h"
+#include "config.h"
 #include <iostream>
 #include <stdlib.h>
 #include <string.h>
