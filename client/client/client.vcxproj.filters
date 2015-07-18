@@ -29,5 +29,16 @@
     <ClInclude Include="Receive.h">
       <Filter>源文件</Filter>
     </ClInclude>
+    <ClInclude Include="Send.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="tjson.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="test.json">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
 </Project>

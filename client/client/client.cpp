@@ -6,21 +6,19 @@
 #include "Config.h"
 #include "ChatInput.h"
 #include "Receive.h"
+#include "tjson.h"
 #pragma comment(lib,"ws2_32.lib")
 using namespace std;
-const int MAX = 128;
-
-class proto{
-public:
-	char name[10];
-	char msg[20];
-	proto(string n, string m){
-		memcpy(name, n.c_str(), n.length() + 1);
-		memcpy(msg, m.c_str(), m.length() + 1);
-	}
-};
 
 int main(){
+
+	TestJson();
+
+
+
+	return 5;
+
+
     WORD mVersionRequested;
     WSADATA wsaData;//WSADATA结构被用来保存AfxSocketInit函数返回的WindowsSockets初始化信息。
     int ret;
@@ -67,10 +65,9 @@ int main(){
 
     ret=connect(sClient,(struct sockaddr *)&saServer,sizeof(saServer));
     if(ret==SOCKET_ERROR){
-        cout<<"连接失败!"<<endl;
+        cout<<"连接服务器失败!点击任意键退出....."<<endl;
         closesocket(sClient);
         WSACleanup();
-		getchar();
 		getchar();
         exit(1);
     }

@@ -3,7 +3,7 @@
 #include <string>
 using namespace std;
 const char *host="182.254.233.115";
-const int port=9022;
+const int port=9202;
 const int MSGSIZE = 128;
 
 #endif
