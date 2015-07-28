@@ -6,8 +6,6 @@
 #include <WinSock2.h>
 #include "Config.h"
 #include <Windows.h>
-#include <string>
-#include "jsonPP/include/json/json.h"
 using namespace std;
 void Receive(SOCKET sockfd){
 	char buf[MSGSIZE];
@@ -17,10 +15,6 @@ void Receive(SOCKET sockfd){
 		buf[rev] = '\0';
 		if (rev > 0){
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
-			string str=new string(buf);
-			Json::Value js;
-			js.parse(str);
-			cout<<"id="<<js["id"].asInt()<<" ,name="<<js["name"].asString()<<" ,age="<<js["age"].asInt()<<endl;
 			cout << "¹«¹²ÆµµÀ:" << buf << endl;
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_BLUE);
 		}
