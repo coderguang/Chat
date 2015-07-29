@@ -116,7 +116,8 @@ int main(int argc,char **argv){
 					for(int j=0;j<FD_SETSIZE;j++){
 						if(client[j]!=-1){
 							//Writen(client[j],buf,n);
-							Writen(client[j],sstr.c_str(),sizeof(sstr.c_str()));
+							//Writen(client[j],sstr.c_str(),sizeof(sstr.c_str()));
+							Writen(client[j],sstr.c_str(),strlen(sstr.c_str()));
 							
 						}
 					}
