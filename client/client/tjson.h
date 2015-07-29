@@ -10,14 +10,12 @@ void TestJson(){
 	assert(ifs.is_open());
 	
 	Json::Reader reader;
-	 Json::Value root;
+	Json::Value root;
 	if (!reader.parse(ifs, root, false))
-			   {
+	{
 				   return ;
-			   }
-	               
-	
-	             std::string name = root["name"].asString();
+			   }	              	
+	           std::string name = root["name"].asString();
 	           int age = root["age"].asInt();
 	
 		            std::cout << name << std::endl;
