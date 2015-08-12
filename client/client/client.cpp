@@ -12,13 +12,6 @@ using namespace std;
 
 int main(){
 
-	TestJson();
-
-
-
-	return 5;
-
-
     WORD mVersionRequested;
     WSADATA wsaData;//WSADATA结构被用来保存AfxSocketInit函数返回的WindowsSockets初始化信息。
     int ret;
