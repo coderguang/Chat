@@ -1,0 +1,6 @@
+server : server.o
+	clang++ -Wall -g server.o -o server -ljson -lpthread
+server.o : server.cpp 
+	clang++ -Wall -c -g server.cpp ../../ComLib/linuxLib/linComNet.h -ljson -lpthread
+clean :
+	rm *.o server
