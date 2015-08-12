@@ -1,6 +1,0 @@
-server : server.o
-	g++ -g server.o -o server
-server.o : server.cpp 
-	g++ -c -g server.cpp ../../ComLib/linuxLib/linComNet.h -ljson -lpthread
-clean :
-	rm *.o server
