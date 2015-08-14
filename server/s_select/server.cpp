@@ -58,7 +58,7 @@ int main(int argc,char **argv){
 	Listen(listenfd,10);
 	
 	maxfd=listenfd; //initialize
-	counter=-1;
+	counter=0;
 
 	for(i=0;i<FD_SETSIZE;i++){
 		client[i]=-1;
@@ -75,9 +75,12 @@ int main(int argc,char **argv){
 			clilen=sizeof(cliaddr);
 			connfd=Accept(listenfd,(struct sockaddr *)&cliaddr,&clilen);
 
-			for(i=0;i<FD_SETSIZE;i++){
+			for(i=1;i<FD_SETSIZE;i++){
 				if(client[i]<0){
 					cout<<"socket="<<connfd<<" connected!"<<endl;
+					counter++;
+					std::cout<<"counter="<<counter<<endl;
+
 					client[i]=connfd;//save the new sockfd
 					break;
 				}
@@ -107,20 +110,22 @@ int main(int argc,char **argv){
 				memset(buf,sizeof(buf),'\0');
 				if((n=Read(sockfd,buf,MSGSIZE))==0){
 					cout<<"socket="<<sockfd<<" is disconnect..."<<endl;
+					counter--;
+					cout<<"counter="<<counter<<endl;
 					close(sockfd);//connection closed by client
 					FD_CLR(sockfd,&allset);
 					client[i]=-1;
 				}else{
 					buf[n]='\0';
-					cout<<"get the msg:"<<buf<<endl;
+					//cout<<"get the msg:"<<buf<<endl;
+					/**
 					for(int j=0;j<FD_SETSIZE;j++){
 						if(client[j]!=-1){
-							//Writen(client[j],buf,n);
-							//Writen(client[j],sstr.c_str(),sizeof(sstr.c_str()));
-							Writen(client[j],sstr.c_str(),strlen(sstr.c_str()));
+							Writen(client[j],sstr.c_str(),strlen(sstr.c_str()));//only respone it
 							
 						}
-					}
+					}*/
+					Writen(sockfd,sstr.c_str(),strlen(sstr.c_str()));
 					
 				}
 				if(nready<=0){
