@@ -13,5 +13,7 @@ function fileClear(){
 		done
 }
 
-fileClear /data/chat/server
+runPath=$(cd `dirname $0`;pwd)
+
+fileClear $runPath
 
