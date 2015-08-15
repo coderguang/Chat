@@ -121,7 +121,7 @@ int main(int argc,char **argv){
 							std::cout<<"socket "<<client_fd<<" is hung up"<<std::endl;
 						}else{
 							std::cout<<"recv error in socket"<<client_fd<<std::endl;
-						
+								
 							/*	
 							if(epoll_ctl(epfd,EPOLL_CTL_DEL,client_fd,&ev)<0){
 								std::cout<<"epoll_ctl del error,socket="<<client_fd<<std::endl;
