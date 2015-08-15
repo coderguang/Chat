@@ -3,4 +3,4 @@ server : server.o
 server.o : server.cpp 
 	clang++ -Wall -c -g server.cpp ../../../ComLib/linuxLib/linComNet.h -ljson -lpthread
 clean :
-	rm *.o server
+	rm server *.o *~
