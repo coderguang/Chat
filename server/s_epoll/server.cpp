@@ -125,7 +125,7 @@ int main(int argc,char **argv){
 							/*	
 							if(epoll_ctl(epfd,EPOLL_CTL_DEL,client_fd,&ev)<0){
 								std::cout<<"epoll_ctl del error,socket="<<client_fd<<std::endl;
-							}
+							} 
 							Close(client_fd);
 							*/
 						}
