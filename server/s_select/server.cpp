@@ -1,7 +1,6 @@
-#include "../../../ComLib/linuxLib/linComNet.h"
-#include "../../../ComLib/linuxLib/Func.h"
-#include "../../../ComLib/json/json.h"
 #include "config.h"
+#include "../../../Common/net/socket/SocketBase.h"
+#include "../../../Common/json/json.h"
 #include <iostream>
 #include <stdlib.h>
 #include <string.h>
@@ -9,7 +8,9 @@
 #include <arpa/inet.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+
 using namespace std;
+using namespace GCommon::GNet::GSocket;
 
 class proto{
 public:
@@ -44,7 +45,7 @@ int main(int argc,char **argv){
 	struct sockaddr_in cliaddr;
 	struct sockaddr_in servaddr;
 	
-	listenfd=Socket(AF_INET,SOCK_STREAM,0);
+	listenfd=CSocketBase::Socket(AF_INET,SOCK_STREAM,0);
 	
 	bzero(&servaddr,sizeof(servaddr));
 
@@ -53,9 +54,9 @@ int main(int argc,char **argv){
 	//servaddr.sin_port=htons(atoi(argv[0]));
 	servaddr.sin_addr.s_addr=INADDR_ANY;
 
-	Bind(listenfd,(struct sockaddr*)&servaddr,sizeof(servaddr));
+	CSocketBase::Bind(listenfd,(struct sockaddr*)&servaddr,sizeof(servaddr));
 
-	Listen(listenfd,10);
+	CSocketBase::Listen(listenfd,10);
 	
 	maxfd=listenfd; //initialize
 	counter=0;
@@ -69,11 +70,11 @@ int main(int argc,char **argv){
 
 	for(;;){
 		rset=allset;
-		nready=Select(maxfd+1,&rset,NULL,NULL,NULL);
+		nready=CSocketBase::Select(maxfd+1,&rset,NULL,NULL,NULL);
 	
 		if(FD_ISSET(listenfd,&rset)){//new client connecton
 			clilen=sizeof(cliaddr);
-			connfd=Accept(listenfd,(struct sockaddr *)&cliaddr,&clilen);
+			connfd=CSocketBase::Accept(listenfd,(struct sockaddr *)&cliaddr,&clilen);
 
 			for(i=1;i<FD_SETSIZE;i++){
 				if(client[i]<0){
@@ -108,7 +109,7 @@ int main(int argc,char **argv){
 			}
 			if(FD_ISSET(sockfd,&rset)){
 				memset(buf,sizeof(buf),'\0');
-				if((n=Read(sockfd,buf,MSGSIZE))==0){
+				if((n=CSocketBase::Read(sockfd,buf,MSGSIZE))==0){
 					cout<<"socket="<<sockfd<<" is disconnect..."<<endl;
 					counter--;
 					cout<<"counter="<<counter<<endl;
@@ -125,7 +126,7 @@ int main(int argc,char **argv){
 							
 						}
 					}*/
-					Writen(sockfd,sstr.c_str(),strlen(sstr.c_str()));
+					//CSocketBase::Writen(sockfd,sstr.c_str(),strlen(sstr.c_str()));
 					
 				}
 				if(nready<=0){
