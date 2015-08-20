@@ -1,6 +1,5 @@
-#include "../../../ComLib/linuxLib/linComNet.h"
-#include "../../../ComLib/linuxLib/Func.h"
-#include "../../../ComLib/json/json.h"
+#include "../../../Common/net/socket/SocketBase.h"
+#include "../../../Common/json/json.h"
 #include "config.h"
 #include <iostream>
 #include <stdlib.h>
@@ -11,6 +10,7 @@
 #include <sys/socket.h>
 
 using namespace std;
+using namespace GCommon::GNet::GSocket;
 
 static const int OPEN_MAX=128;
 
@@ -34,7 +34,7 @@ int main(int argc,char **argv){
 	struct sockaddr_in cliaddr;
 	struct sockaddr_in servaddr;
 	
-	listenfd=Socket(AF_INET,SOCK_STREAM,0);
+	listenfd=CSocketBase::Socket(AF_INET,SOCK_STREAM,0);
 	
 	bzero(&servaddr,sizeof(servaddr));
 
@@ -43,9 +43,9 @@ int main(int argc,char **argv){
 	//servaddr.sin_port=htons(atoi(argv[0]));
 	servaddr.sin_addr.s_addr=INADDR_ANY;
 
-	Bind(listenfd,(struct sockaddr*)&servaddr,sizeof(servaddr));
+	CSocketBase::Bind(listenfd,(struct sockaddr*)&servaddr,sizeof(servaddr));
 
-	Listen(listenfd,10);
+	CSocketBase::Listen(listenfd,10);
 	
 	client[0].fd=listenfd;
 	client[0].events=POLLRDNORM;
@@ -62,11 +62,11 @@ int main(int argc,char **argv){
 
 
 	for(;;){
-		nready=Poll(client,maxfd+1,1000);
+		nready=CSocketBase::Poll(client,maxfd+1,1000);
 	
 		if(client[0].revents&POLLRDNORM){//new client connecton
 			clilen=sizeof(cliaddr);
-			connfd=Accept(listenfd,(struct sockaddr *)&cliaddr,&clilen);
+			connfd=CSocketBase::Accept(listenfd,(struct sockaddr *)&cliaddr,&clilen);
 
 			for(i=1;i<OPEN_MAX;i++){
 				if(client[i].fd<0){
@@ -96,16 +96,16 @@ int main(int argc,char **argv){
 			}
 			if(client[i].revents&POLLRDNORM){
 				memset(buf,sizeof(buf),'\0');
-				if((n=Read(sockfd,buf,MSGSIZE))==0){//connections close by client
+				if((n=CSocketBase::Read(sockfd,buf,MSGSIZE))==0){//connections close by client
 					cout<<"socket="<<sockfd<<" is disconnect..."<<endl;
-					close(sockfd);//connection closed by client
+					CSocketBase::Close(sockfd);//connection closed by client
 					client[i].fd=-1;
 				}else if(n>0){
 					buf[n]='\0';
 					cout<<"get the msg:"<<buf<<endl;
 					for(int j=1;j<maxfd;j++){
 						if(client[j].fd!=-1){
-							Writen(client[j].fd,sstr.c_str(),strlen(sstr.c_str()));
+							//Writen(client[j].fd,sstr.c_str(),strlen(sstr.c_str()));
 							
 						}
 					}
@@ -113,7 +113,7 @@ int main(int argc,char **argv){
 				}else if(n<0){
 					if(errno==ECONNRESET){
 						cout<<"socket="<<sockfd<<" is reset..."<<endl;
-						Close(sockfd);//connection reset by client
+						CSocketBase::Close(sockfd);//connection reset by client
 						client[i].fd=-1;
 					}
 				}
