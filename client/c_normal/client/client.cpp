@@ -64,7 +64,13 @@ int main(){
 		getchar();
         exit(1);
     }
-
+	/*
+	int ii = 0;
+	while (ii++<10000){
+		char test[20] = "hello world";
+		int slen = send(sClient, test, 20, 0);
+		cout << "send num=" << slen << endl;
+	}*/
 	thread recThread(Receive, sClient);
 	thread sendThread(ChatInput,sClient);
 	recThread.join();
@@ -74,7 +80,7 @@ int main(){
     closesocket(sClient);
     WSACleanup();
 	getchar();
-	getchar();
+//	getchar();
 	return 0;
 }
 
