@@ -109,7 +109,7 @@ int main(int argc,char **argv){
 			}
 			if(FD_ISSET(sockfd,&rset)){
 				memset(buf,sizeof(buf),'\0');
-				if((n=CSocketBase::Read(sockfd,buf,MSGSIZE))==0){
+				if((n=CSocketBase::Read(sockfd,buf,MSGSIZE))<=0){
 					cout<<"socket="<<sockfd<<" is disconnect..."<<endl;
 					counter--;
 					cout<<"counter="<<counter<<endl;
