@@ -18,16 +18,7 @@ void Receive(SOCKET sockfd){
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
 
 			string str(buf);
-
-			Json::Value js;
-			Json::Reader reader;
-			if (!reader.parse(str, js)){
-				cout << "json read str fail" << endl;
-			}
-			cout << "id=" << js["id"].asInt() << "   name=" << js["name"].asString() << "  age=" << js["age"].asInt() << endl;
-			
-			cout<<"id="<<js["id"].asInt()<<" ,name="<<js["name"].asString()<<" ,age="<<js["age"].asInt()<<endl;
-			cout << "¹«¹²ÆµµÀ:" << buf << endl;
+			cout << "get the server msg:" << str << endl;
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_BLUE);
 		}
 	}

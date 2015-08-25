@@ -72,13 +72,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="client.cpp" />
+    <ClCompile Include="log\Log.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChatInput.h" />
     <ClInclude Include="Config.h" />
+    <ClInclude Include="CWinSocket.h" />
+    <ClInclude Include="log\Log.h" />
     <ClInclude Include="Receive.h" />
     <ClInclude Include="Send.h" />
     <ClInclude Include="tjson.h" />
+    <ClInclude Include="util\FuncPtr.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="test.json" />
