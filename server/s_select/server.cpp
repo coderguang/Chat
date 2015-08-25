@@ -119,12 +119,14 @@ int main(int argc,char **argv){
 				}else{
 					buf[n]='\0';
 					cout<<"get the msg:"<<buf<<endl;
+					/*
 					for(int j=0;j<FD_SETSIZE;j++){
 						if(client[j]!=-1){
 							CSocketBase::Writen(client[j],sstr.c_str(),strlen(sstr.c_str()));//only respone it
 							
 						}
 					}
+					*/
 					//CSocketBase::Writen(sockfd,sstr.c_str(),strlen(sstr.c_str()));
 					
 				}
@@ -132,9 +134,8 @@ int main(int argc,char **argv){
 					break;
 				}
 			
-			}else{
-				cout<<"sockfd="<<sockfd<<" not in set"<<endl;
 			}
+			
 		}
 	}
 }
