@@ -1,6 +1,6 @@
 #include "config.h"
-#include "../../../Common/net/socket/SocketBase.h"
-#include "../../../Common/json/json.h"
+#include "../../../Common/include/net/SocketBase.h"
+#include "../../../Common/include/json/json.h"
 #include <iostream>
 #include <stdlib.h>
 #include <string.h>
@@ -34,6 +34,7 @@ int main(int argc,char **argv){
 
 	Json::FastWriter fastWriter;
 	string sstr=fastWriter.write(obj);
+        
 
 	int i,counter,maxfd,sockfd,listenfd,connfd;
 	int nready,client[FD_SETSIZE];
@@ -119,14 +120,15 @@ int main(int argc,char **argv){
 				}else{
 					buf[n]='\0';
 					cout<<"get the msg:"<<buf<<endl;
-					/*
+					
 					for(int j=0;j<FD_SETSIZE;j++){
 						if(client[j]!=-1){
-							CSocketBase::Writen(client[j],sstr.c_str(),strlen(sstr.c_str()));//only respone it
+						//CSocketBase::Writen(client[j],sstr.c_str(),strlen(sstr.c_str()));//only respone it
+						CSocketBase::Writen(client[j],buf,strlen(buf));//only respone it
 							
 						}
 					}
-					*/
+				
 					//CSocketBase::Writen(sockfd,sstr.c_str(),strlen(sstr.c_str()));
 					
 				}
