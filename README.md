@@ -44,4 +44,8 @@ ChatDemo
   3. now you will get three Executive Document in server/s_select,server/s_poll,server/s_epoll.  
     defualt listen port is 9000 for epoll,9100 for poll,9200 for select  
     you can modify it on config.h,after modify,you should rebuild it  
-    
+    for example: server_poll
+    **in linux server:**
+     ![run img](https://github.com/coderguang/img/blob/master/chat/linux_server.png)
+    **in windows:**
+     ![run img](https://github.com/coderguang/img/blob/master/chat/client.png)
