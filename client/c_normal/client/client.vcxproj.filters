@@ -19,6 +19,9 @@
     <Filter Include="util">
       <UniqueIdentifier>{15a21a09-073c-410e-a1ec-0470196556a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="json">
+      <UniqueIdentifier>{1cc2debb-96fa-41ba-9ae8-cad0cb0e2921}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="client.cpp">
@@ -26,6 +29,15 @@
     </ClCompile>
     <ClCompile Include="log\Log.cpp">
       <Filter>log</Filter>
+    </ClCompile>
+    <ClCompile Include="json\json_reader.cpp">
+      <Filter>json</Filter>
+    </ClCompile>
+    <ClCompile Include="json\json_value.cpp">
+      <Filter>json</Filter>
+    </ClCompile>
+    <ClCompile Include="json\json_writer.cpp">
+      <Filter>json</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -53,10 +65,46 @@
     <ClInclude Include="util\FuncPtr.h">
       <Filter>util</Filter>
     </ClInclude>
+    <ClInclude Include="json\config.h">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="json\features.h">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="json\forwards.h">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="json\json.h">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="json\json_batchallocator.h">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="json\reader.h">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="json\value.h">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="json\writer.h">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="json\autolink.h">
+      <Filter>json</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="test.json">
       <Filter>资源文件</Filter>
+    </None>
+    <None Include="json\json_internalarray.inl">
+      <Filter>json</Filter>
+    </None>
+    <None Include="json\json_internalmap.inl">
+      <Filter>json</Filter>
+    </None>
+    <None Include="json\json_valueiterator.inl">
+      <Filter>json</Filter>
     </None>
   </ItemGroup>
 </Project>
