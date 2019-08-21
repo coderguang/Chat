@@ -27,9 +27,9 @@ script:
   - cd server/s_select
   - make clean && make
   - cd ../
-  - cd server/s_poll
+  - cd s_poll
   - make clean && make
   - cd ../
-  - cd server/s_epoll
+  - cd s_epoll
   - make clean && make
   
