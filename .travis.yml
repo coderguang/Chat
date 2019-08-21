@@ -9,5 +9,10 @@ before_install:
     
   
 script:
-  - go build
-  - go test
+  - cd server/s_select
+  - make clean && make
+  - cd server/s_poll
+  - make clean && make
+  - cd server/s_epoll
+  - make clean && make
+  
