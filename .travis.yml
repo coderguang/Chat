@@ -5,17 +5,20 @@ complier:
 
 before_install: 
     - git clone https://github.com/coderguang/Common.git
+    - cd Common/include/json/
+    - make clean && make
+    - cd ../../../
     - cd Common/lib/
     - rm -rf *.a
     - cd ../../
     - cd Common/log/
-    - make
+    - make clean && make
     - cd ../../
     - cd Common/util/
-    - make
+    - make clean && make
     - cd ../../
     - cd Common/net/socket/
-    - make 
+    - make clean && make
     - cd ../../../
     - mv Common ../
     
