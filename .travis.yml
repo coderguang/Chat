@@ -1,0 +1,13 @@
+language: cpp
+
+complier: 
+    - clang
+
+before_install: 
+    - git clone https://github.com/coderguang/Common.git
+    - mv Common ../
+    
+  
+script:
+  - go build
+  - go test

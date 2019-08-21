@@ -5,4 +5,4 @@ server.o : server.cpp
 SocketBase.o : ../../../Common/net/socket/SocketBase.cpp 
 	clang++ -Wall -c -g ../../../Common/net/socket/SocketBase.cpp ../../../Common/lib/liblog.a ../../../Common/lib/libutil.a
 clean :
-	rm server *.o *~
+	-rm server *.o *~
