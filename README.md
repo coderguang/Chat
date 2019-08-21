@@ -46,7 +46,7 @@ ChatDemo
     you can modify it on config.h,after modify,you should rebuild it  
  
   4. client project is in client,use visual studio 2015  
-    for example: server_poll and c_normal.
+    for example: server_poll and c_normal.  
     **in linux server:**
      ![linux_server](https://github.com/coderguang/img/blob/master/Chat/linux_server.png) 
     **in windows:**
