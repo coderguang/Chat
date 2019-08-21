@@ -5,7 +5,8 @@
 #include "Config.h"
 #include <Windows.h>
 #include <string>
-#include "jsonPP/include/json/json.h"
+#include "json/json.h"
+
 using namespace std;
 void Receive(SOCKET sockfd){
 	char buf[MSGSIZE];
